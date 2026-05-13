@@ -1,0 +1,68 @@
+========================================
+QUICK SETUP GUIDE
+Community Blood Donation Portal
+========================================
+
+FASTEST WAY TO GET STARTED (3 Steps):
+--------------------------------------
+
+Step 1: Extract & Place Files
+------------------------------
+Extract this folder to: C:/xampp/htdocs/
+Path: C:/xampp/htdocs/Community Blood Donation Portal/
+
+Step 2: Create Database
+------------------------
+1. Start XAMPP (Apache + MySQL)
+2. Open: http://localhost/phpmyadmin
+3. Click "New" to create database
+4. Name: blood_donation_portal
+5. Click "Create"
+6. Select the database
+7. Go to "Import" tab
+8. Choose file: database/schema.sql
+9. Click "Go"
+
+Step 3: Setup Demo Accounts
+----------------------------
+1. Open browser
+2. Go to: http://localhost/Community%20Blood%20Donation%20Portal/setup_demo_accounts.php
+3. Wait for "Setup Complete" message
+4. Delete setup_demo_accounts.php file (for security)
+
+DONE! Now login with:
+---------------------
+
+Admin Login:
+Email: admin@bloodportal.com
+Password: admin123
+
+Donor Login:
+Email: donors@bloodportal.com
+Password: donors123
+
+Hospital Login:
+Email: hospitals@bloodportal.com
+Password: hospitals123
+
+ACCESS THE APPLICATION:
+-----------------------
+http://localhost/Community%20Blood%20Donation%20Portal/
+
+TROUBLESHOOTING:
+----------------
+
+Problem: "Invalid email or password"
+Solution: Make sure you ran setup_demo_accounts.php
+
+Problem: Database connection error
+Solution: 
+- Check MySQL is running
+- Database name is correct: blood_donation_portal
+
+Problem: Pending approval screen
+Solution: Demo accounts are pre-approved, no approval needed
+
+========================================
+Need help? Check README.md for details
+========================================

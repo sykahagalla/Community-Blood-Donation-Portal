@@ -1,0 +1,136 @@
+========================================
+COMMUNITY BLOOD DONATION PORTAL
+Installation Guide
+========================================
+
+QUICK START GUIDE
+-----------------
+
+1. REQUIREMENTS
+   - XAMPP (or any PHP/MySQL server)
+   - PHP 7.4 or higher
+   - MySQL 5.7 or higher
+   - Modern web browser
+
+2. INSTALLATION STEPS
+
+   Step 1: Extract Files
+   ----------------------
+   Extract this folder to: C:/xampp/htdocs/
+   Final path: C:/xampp/htdocs/Community Blood Donation Portal/
+
+   Step 2: Start Services
+   ----------------------
+   - Open XAMPP Control Panel
+   - Start Apache
+   - Start MySQL
+
+   Step 3: Create Database
+   -----------------------
+   - Open browser and go to: http://localhost/phpmyadmin
+   - Click "New" to create a new database
+   - Database name: blood_donation_portal
+   - Collation: utf8mb4_unicode_ci
+   - Click "Create"
+
+   Step 4: Import Database Schema
+   -------------------------------
+   - Select the database "blood_donation_portal"
+   - Click on "Import" tab
+   - Click "Choose File"
+   - Select: database/schema.sql
+   - Click "Go" button at the bottom
+   - Wait for success message
+
+   Step 5: Access the Application
+   -------------------------------
+   Open your browser and visit:
+   http://localhost/Community%20Blood%20Donation%20Portal/
+
+3. DEFAULT LOGIN CREDENTIALS
+
+   Administrator:
+   Email: admin@bloodportal.com
+   Password: admin123
+
+   IMPORTANT: Change the admin password after first login!
+
+4. FIRST TIME SETUP
+
+   As Administrator:
+   - Log in with admin credentials
+   - Approve pending donor/hospital registrations
+   - Monitor system dashboard
+
+   As Donor:
+   - Click "Become a Donor" on homepage
+   - Fill registration form
+   - Wait for admin approval
+   - Check email for approval notification
+
+   As Hospital:
+   - Click "Register Hospital" on homepage
+   - Complete hospital registration
+   - Wait for admin verification
+   - Once approved, create blood requests
+
+5. CONFIGURATION (Optional)
+
+   Database Settings:
+   File: config/database.php
+   - Update host, username, password if different from defaults
+
+   Email Settings (for future features):
+   File: config/config.php
+   - Update SMTP settings for email notifications
+
+6. TROUBLESHOOTING
+
+   Problem: Cannot connect to database
+   Solution: 
+   - Ensure MySQL is running in XAMPP
+   - Check credentials in config/database.php
+   - Verify database name is correct
+
+   Problem: Page not found (404)
+   Solution:
+   - Check URL is correct (note %20 for spaces)
+   - Verify files are in htdocs folder
+   - Check Apache is running
+
+   Problem: Blank white screen
+   Solution:
+   - Enable error display in PHP
+   - Check PHP error logs
+   - Verify all files are extracted properly
+
+   Problem: Account pending approval
+   Solution:
+   - Login as admin and approve the account
+   - Or wait for admin to approve
+
+7. SUPPORT
+
+   For technical support:
+   - Check README.md for detailed documentation
+   - Email: info@bloodlife.lk
+   - Phone: +94 11 234 5678
+
+8. SYSTEM REQUIREMENTS
+
+   Minimum:
+   - PHP 7.4+
+   - MySQL 5.7+
+   - 100MB free disk space
+   - 512MB RAM
+
+   Recommended:
+   - PHP 8.0+
+   - MySQL 8.0+
+   - 500MB free disk space
+   - 1GB RAM
+
+========================================
+Installation complete!
+Visit the application and start saving lives!
+========================================

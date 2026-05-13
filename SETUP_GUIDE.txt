@@ -1,0 +1,260 @@
+═══════════════════════════════════════════════════════════════════
+  COMMUNITY BLOOD DONATION PORTAL - UPDATE SETUP GUIDE
+═══════════════════════════════════════════════════════════════════
+
+Date: April 30, 2026
+Version: 1.1.0
+
+═══════════════════════════════════════════════════════════════════
+  QUICK START GUIDE
+═══════════════════════════════════════════════════════════════════
+
+✅ STEP 1: DATABASE UPDATE (REQUIRED)
+─────────────────────────────────────────────────────────────────
+
+1. Open phpMyAdmin (http://localhost/phpmyadmin)
+2. Select your database: blood_donation_portal
+3. Click "SQL" tab
+4. Copy and paste this SQL code:
+
+   ALTER TABLE `users` 
+   ADD COLUMN `reset_token` VARCHAR(100) NULL DEFAULT NULL AFTER `last_login`,
+   ADD COLUMN `reset_token_expiry` DATETIME NULL DEFAULT NULL AFTER `reset_token`;
+   
+   ALTER TABLE `users`
+   ADD INDEX `idx_reset_token` (`reset_token`);
+
+5. Click "Go" button
+6. Verify: You should see "2 rows affected" message
+
+✅ STEP 2: VERIFY FILES
+─────────────────────────────────────────────────────────────────
+
+New files created:
+  ✓ auth/forgot_password.php
+  ✓ auth/reset_password.php
+  ✓ database/update_reset_password.sql
+  ✓ CHANGELOG.md
+  ✓ SETUP_GUIDE.txt (this file)
+
+Modified files:
+  ✓ auth/register.php
+  ✓ auth/login.php
+  ✓ admin/dashboard.php
+  ✓ admin/includes/header.php
+  ✓ donor/dashboard.php
+  ✓ donor/includes/header.php
+  ✓ hospital/dashboard.php
+  ✓ hospital/includes/header.php
+
+✅ STEP 3: TEST FEATURES
+─────────────────────────────────────────────────────────────────
+
+A. Test Registration Success Page:
+   1. Go to: http://localhost/Community%20Blood%20Donation%20Portal%20Update/auth/register.php
+   2. Select "I'm a Donor" or "I'm a Hospital"
+   3. Fill in all required fields
+   4. Submit form
+   5. ✓ You should see the success page with proper message
+
+B. Test Forgot Password:
+   1. Go to: http://localhost/Community%20Blood%20Donation%20Portal%20Update/auth/login.php
+   2. Click "Forgot password?" link
+   3. Enter: admin@bloodportal.com (or any registered email)
+   4. Click "Send Reset Link"
+   5. Click the generated reset link
+   6. Enter new password (minimum 6 characters)
+   7. Confirm password
+   8. Submit
+   9. ✓ You should see success message and be able to login
+
+C. Test Admin Notifications:
+   1. Login as admin: admin@bloodportal.com / admin123
+   2. Click the bell icon (🔔) in top right
+   3. ✓ You should see dropdown with pending user approvals
+   4. Check: User names, emails, blood types display correctly
+   5. Click "Review" button → should navigate to user details
+
+D. Test Donor Notifications:
+   1. Login as donor: donors@bloodportal.com / donors123
+   2. Click the bell icon (🔔) in top right
+   3. ✓ You should see dropdown with matching blood requests
+   4. Check: Hospital names, urgency levels, units needed
+   5. Color coding: Red (critical), Orange (urgent), Blue (normal)
+
+E. Test Hospital Notifications:
+   1. Login as hospital: hospitals@bloodportal.com / hospitals123
+   2. Click the bell icon (🔔) in top right
+   3. ✓ You should see dropdown with two sections:
+      - Active Blood Requests
+      - Recent Donations (last 7 days)
+   4. Verify data displays correctly
+
+═══════════════════════════════════════════════════════════════════
+  WHAT'S FIXED
+═══════════════════════════════════════════════════════════════════
+
+Issue #1: Registration Success Page
+  ❌ BEFORE: 404 error after registration
+  ✅ AFTER: Displays beautiful success page with next steps
+
+Issue #2: Forgot Password
+  ❌ BEFORE: Link did nothing (#)
+  ✅ AFTER: Complete password reset system working
+
+Issue #3: Notification Details
+  ❌ BEFORE: Only showed count badge
+  ✅ AFTER: Rich dropdown with full details:
+     • Admin: See pending users with all info
+     • Donor: See blood requests with urgency, location, patient
+     • Hospital: See active requests + recent donations
+
+═══════════════════════════════════════════════════════════════════
+  FEATURES ADDED
+═══════════════════════════════════════════════════════════════════
+
+✨ Password Reset System
+   • Secure token generation
+   • 1-hour token expiry
+   • Email-ready (SMTP config needed)
+   • User-friendly interface
+
+✨ Interactive Notification Dropdowns
+   • Click bell icon to open
+   • Click outside to close
+   • Smooth animations
+   • Color-coded urgency levels
+   • Real-time database data
+   • Responsive design
+
+✨ Enhanced User Experience
+   • Modern, clean interface
+   • Intuitive navigation
+   • Visual feedback
+   • Mobile-friendly
+
+═══════════════════════════════════════════════════════════════════
+  TROUBLESHOOTING
+═══════════════════════════════════════════════════════════════════
+
+Problem: Notification dropdown doesn't open
+Solution: Check if Alpine.js is loaded (check browser console)
+         Verify JavaScript is enabled
+
+Problem: Password reset token invalid
+Solution: Check database - ensure reset_token columns exist
+         Token expires after 1 hour - request new one
+
+Problem: Registration redirect still broken
+Solution: Clear browser cache
+         Verify register.php was updated correctly
+
+Problem: Dropdown shows empty
+Solution: Add some test data:
+         - Create pending user registrations (for admin)
+         - Create blood requests (for donor/hospital)
+         - Check database connection
+
+═══════════════════════════════════════════════════════════════════
+  BROWSER COMPATIBILITY
+═══════════════════════════════════════════════════════════════════
+
+✅ Chrome/Edge (Latest)
+✅ Firefox (Latest)
+✅ Safari (Latest)
+✅ Mobile browsers
+
+Requirements:
+  • JavaScript enabled
+  • Cookies enabled
+  • Modern browser (2020+)
+
+═══════════════════════════════════════════════════════════════════
+  TECHNICAL DETAILS
+═══════════════════════════════════════════════════════════════════
+
+Technologies Used:
+  • PHP 7.4+
+  • MySQL/MariaDB
+  • Alpine.js 3.x (15KB, no dependencies)
+  • Tailwind CSS (via CDN)
+  • Font Awesome 6.4.0
+
+Database Changes:
+  • Added: users.reset_token (VARCHAR 100)
+  • Added: users.reset_token_expiry (DATETIME)
+  • Added: Index on reset_token
+
+Performance:
+  • Alpine.js: ~15KB gzipped
+  • No jQuery needed
+  • Efficient SQL queries with LIMIT
+  • Indexed database fields
+
+Security:
+  • Prepared statements (SQL injection prevention)
+  • HTML escaping (XSS prevention)
+  • Secure token generation
+  • Password hashing (bcrypt)
+
+═══════════════════════════════════════════════════════════════════
+  DEMO ACCOUNTS
+═══════════════════════════════════════════════════════════════════
+
+Admin:
+  Email: admin@bloodportal.com
+  Password: admin123
+
+Donor:
+  Email: donors@bloodportal.com
+  Password: donors123
+
+Hospital:
+  Email: hospitals@bloodportal.com
+  Password: hospitals123
+
+═══════════════════════════════════════════════════════════════════
+  NEXT STEPS (OPTIONAL)
+═══════════════════════════════════════════════════════════════════
+
+1. Configure SMTP for email notifications
+   File: config/config.php
+   Update: SMTP_HOST, SMTP_USER, SMTP_PASS
+
+2. Customize notification preferences
+   Allow users to control notification types
+
+3. Add real-time updates
+   Implement WebSocket for live notifications
+
+4. Mobile app integration
+   Expose API endpoints for mobile apps
+
+═══════════════════════════════════════════════════════════════════
+  SUPPORT
+═══════════════════════════════════════════════════════════════════
+
+For detailed documentation, see: CHANGELOG.md
+
+Questions? Issues?
+  • Check CHANGELOG.md for detailed information
+  • Review code comments in modified files
+  • Check browser console for errors
+  • Verify database structure
+
+═══════════════════════════════════════════════════════════════════
+  VERSION HISTORY
+═══════════════════════════════════════════════════════════════════
+
+v1.1.0 (April 30, 2026)
+  • Fixed registration redirect
+  • Added forgot password system
+  • Enhanced notification dropdowns
+  • Improved UI/UX
+
+v1.0.0 (March 2026)
+  • Initial release
+
+═══════════════════════════════════════════════════════════════════
+
+END OF SETUP GUIDE
